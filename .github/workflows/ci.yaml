@@ -1,0 +1,29 @@
+on: [push]
+name: CI
+jobs:
+  macos-build:
+    name: MacOS Build
+    runs-on: macos-11
+    env:
+      CMAKE_PRESET: macos-release
+    steps:
+      - name: Install dependencies
+        run: |
+          brew install ninja
+      - name: Checkout Current Branch
+        uses: actions/checkout@v2
+        with:
+          submodules: true
+      - name: Install vckpg dependencies
+        uses: lukka/run-vcpkg@v10
+        with:
+          vcpkgDirectory: "${{github.workspace}}/vcpkg"
+      - name: Run CMake
+        uses: lukka/run-cmake@v10
+        with:
+          cmakeListsTxtPath: "${{github.workspace}}/CMakeLists.txt"
+          configurePreset: ${{env.CMAKE_PRESET}}
+          buildPreset: ${{env.CMAKE_PRESET}}
+        env:
+          CC: gcc-10
+          CXX: g++-10
