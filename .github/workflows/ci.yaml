@@ -24,6 +24,3 @@ jobs:
           cmakeListsTxtPath: "${{github.workspace}}/CMakeLists.txt"
           configurePreset: ${{env.CMAKE_PRESET}}
           buildPreset: ${{env.CMAKE_PRESET}}
-        env:
-          CC: gcc-10
-          CXX: g++-10
